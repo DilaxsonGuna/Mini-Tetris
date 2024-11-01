@@ -2,6 +2,7 @@
 
 Interfaccia::Interfaccia(int a, int b)
 {
+    getmaxyx(stdscr, a, b);
     altezza = a;
     base = b;
 }

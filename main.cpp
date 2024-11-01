@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
     initscr();
-    Interfaccia menu(50, 50);
+    Interfaccia menu;
     menu.CreateW();
     int c = getch();
     endwin();
