@@ -4,7 +4,7 @@ Menu::Menu(int a, int b) : Interfaccia(a, b)
 {
 }
 
-void Menu::mostraMenu()
+string Menu::mostraMenu()
 {
     string titolo = "Tetris";
     int titleLength = titolo.length();
@@ -50,9 +50,6 @@ void Menu::mostraMenu()
         if (choice == 10)
             break;
     }
-    werase(temp);   // Cancella il contenuto della finestra `temp`
-    wrefresh(temp); // Aggiorna `temp` per riflettere la cancellazione
-    wprintw(temp, "you choise was: %s", choices[highlight].c_str());
-    wrefresh(temp);
-    int c = getch();
+    delwin(temp);
+    return choices[highlight];
 }

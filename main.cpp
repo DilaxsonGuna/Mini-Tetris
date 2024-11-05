@@ -3,6 +3,7 @@
 #include <curses.h>
 #include "Interfaccia.hpp"
 #include "Menu.hpp"
+#include "Game.hpp"
 using namespace std;
 
 int main()
@@ -13,8 +14,12 @@ int main()
 
     Menu start(0, 0);
     start.CreateW();
-    start.mostraMenu();
-
+    if (start.mostraMenu() == "Start")
+    {
+        Game round(0, 0);
+        round.CreateW();
+        round.inserisci_nome();
+    }
     endwin();
     return 0;
 }
