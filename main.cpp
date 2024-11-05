@@ -9,7 +9,6 @@ using namespace std;
 int main()
 {
     initscr();
-    noecho();
     cbreak();
 
     Menu start(0, 0);
@@ -19,6 +18,7 @@ int main()
         Game round(0, 0);
         round.CreateW();
         round.inserisci_nome();
+        round.Game_ON();
     }
     endwin();
     return 0;
