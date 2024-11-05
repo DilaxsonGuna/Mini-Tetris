@@ -5,13 +5,14 @@ Interfaccia::Interfaccia(int a, int b)
     getmaxyx(stdscr, a, b);
     altezza = a;
     base = b;
+    temp = newwin(altezza, base, 0, 0);
+    refresh();
 }
 
 void Interfaccia::CreateW()
 {
-    WINDOW *win = newwin(altezza, base, 0, 0);
-    refresh();
+    box(temp, 0, 0);
+    wrefresh(temp);
 
-    box(win, 0, 0);
-    wrefresh(win);
+    keypad(temp, true);
 }
