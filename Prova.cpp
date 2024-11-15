@@ -1,68 +1,48 @@
 #include <curses.h>
-#include <cstring> // for strlen
-#include <string>  // for string
+#include <ctime>
+#include <string>
 
-void createInputWindow()
+void gameLoop()
 {
-    // Create a new window for input
-    WINDOW *inputWin = newwin(5, 40, 5, 5);   // 5 rows, 40 cols, starting at (5,5)
-    box(inputWin, 0, 0);                      // Draw a border around the window
-    mvwprintw(inputWin, 1, 1, "Type here: "); // Prompt user to type
-    wrefresh(inputWin);                       // Refresh the window to show the changes
+    initscr();
+    cbreak();
+    noecho();
 
-    char input[100] = ""; // Buffer for user input
-    int index = 0;        // Current position in the input buffer
+    // Inizializza tempo di inizio
+    time_t startTime = time(NULL);
 
-    // Main input loop
+    int score = 0; // Supponiamo che ci sia anche un punteggio
+
     while (true)
     {
-        int ch = wgetch(inputWin); // Get character input
+        // Calcola il tempo trascorso
+        time_t currentTime = time(NULL);
+        int elapsedSeconds = difftime(currentTime, startTime);
 
-        if (ch == '\n')
-        {          // Enter key
-            break; // Exit loop on Enter
-        }
-        else if (ch == KEY_BACKSPACE || ch == 127)
-        { // Handle Backspace
-            if (index > 0)
-            {
-                index--;             // Move back in the buffer
-                input[index] = '\0'; // Null-terminate the string
-                wrefresh(inputWin);
-            }
-        }
-        else if (index < sizeof(input) - 1)
-        {                        // Prevent overflow
-            input[index++] = ch; // Store character in buffer
-            input[index] = '\0'; // Null-terminate the string
-        }
+        // Calcola minuti e secondi
+        int minutes = elapsedSeconds / 60;
+        int seconds = elapsedSeconds % 60;
 
-        // Clear the input window and redraw the content
-        werase(inputWin);                         // Clear the window
-        box(inputWin, 0, 0);                      // Redraw the border
-        mvwprintw(inputWin, 1, 1, "Type here: "); // Redraw prompt
-        mvwprintw(inputWin, 2, 1, "%s", input);   // Display current input below the prompt
-        wrefresh(inputWin);                       // Refresh the window to show changes
+        // Mostra il punteggio e il tempo
+        mvprintw(1, 1, "FULL LINES: %d", score);
+        mvprintw(2, 1, "TIME: %02d:%02d", minutes, seconds); // Formato MM:SS
+
+        refresh();
+
+        // Logica di gioco, input, ecc.
+        int ch = getch();
+        if (ch == 'q')
+            break; // Esce dal ciclo di gioco con 'q'
+
+        // Aggiorna il contenuto della finestra (se necessario)
+        napms(500); // Ritarda di 500 ms per vedere l'aggiornamento
     }
 
-    // After input is done
-    werase(inputWin);                                  // Clear the window
-    mvwprintw(inputWin, 1, 1, "You typed: %s", input); // Show what was typed
-    wrefresh(inputWin);                                // Refresh to show the message
-
-    getch();          // Wait for user input before closing
-    delwin(inputWin); // Delete the input window
+    endwin();
 }
 
 int main()
 {
-    initscr();            // Start NCurses
-    cbreak();             // Disable line buffering
-    noecho();             // Don't echo input characters
-    keypad(stdscr, TRUE); // Enable special keys
-
-    createInputWindow(); // Create the input window
-
-    endwin(); // End NCurses
+    gameLoop();
     return 0;
 }

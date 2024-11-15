@@ -18,11 +18,27 @@ void Game::inserisci_nome()
     wrefresh(temp);
 }
 
+void Game::Stopwatch()
+{
+    while (1)
+    {
+        seconds++;
+        if (seconds == 60)
+        {
+            seconds = 0;
+            minutes++;
+        }
+        napms(1000);
+    }
+}
+
 void Game::Game_ON()
 {
     box(temp, 0, 0);
     wrefresh(temp);
     mvprintw(1, 1, nickname);
-    mvprintw(2, 1, "FULL LINES: %d", score);
+    mvprintw(2, 1, "FULL LINES: %d", full_lines);
+    mvprintw(3, 1, "Score: %d", score);
+    mvprintw(4, 1, "Time: %d", minutes, ":%d", seconds);
     getch();
 }

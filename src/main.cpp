@@ -1,6 +1,8 @@
+#include <windows.h>
 #include <iostream>
 #include <cstdlib>
 #include <curses.h>
+#include <ctime>
 #include "Interfaccia.hpp"
 #include "Menu.hpp"
 #include "Game.hpp"
