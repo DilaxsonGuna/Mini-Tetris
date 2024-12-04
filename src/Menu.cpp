@@ -2,6 +2,7 @@
 
 Menu::Menu(int a, int b) : Interfaccia(a, b)
 {
+    CreateW();
 }
 
 string Menu::mostraMenu()
@@ -50,6 +51,20 @@ string Menu::mostraMenu()
         if (choice == 10)
             break;
     }
-    delwin(temp);
+    werase(temp);
+    refresh();
     return choices[highlight];
+}
+
+void Menu::inserisci_nome()
+{
+    box(temp, 0, 0);
+    mvwprintw(temp, altezza / 2, base / 2, "Inserisci nickname: ");
+    wrefresh(temp);
+
+    mvwprintw(temp, altezza / 2, base / 2 + 20, "");
+
+    wgetnstr(temp, nickname, sizeof(nickname) - 1);
+    werase(temp);
+    wrefresh(temp);
 }

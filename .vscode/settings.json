@@ -3,6 +3,14 @@
         "iostream": "cpp",
         "string": "cpp",
         "cstdlib": "cpp",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "memory": "cpp",
+        "functional": "cpp",
+        "istream": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "new": "cpp"
     }
 }

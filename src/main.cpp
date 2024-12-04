@@ -6,6 +6,7 @@
 #include "Interfaccia.hpp"
 #include "Menu.hpp"
 #include "Game.hpp"
+#include "Tetramini.hpp"
 using namespace std;
 
 int main()
@@ -14,12 +15,11 @@ int main()
     cbreak();
 
     Menu start(0, 0);
-    start.CreateW();
     if (start.mostraMenu() == "Start")
     {
-        Game round(0, 0);
-        round.CreateW();
-        round.inserisci_nome();
+        start.inserisci_nome();
+        noecho();
+        Game round;
         round.Game_ON();
     }
     endwin();
