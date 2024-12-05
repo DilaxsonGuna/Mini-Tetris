@@ -33,6 +33,8 @@ public:
     bool right_check();
     bool down_check();
     bool collision();
+    void linedelete(int y);
+    void linecheck();
     void Comandi();
     void changes();
     void update();

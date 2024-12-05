@@ -51,7 +51,7 @@ chtype Game::Get_Input()
 bool Game::left_check()
 {
     bool check;
-    if (it->getX() != 1)
+    if (it->getX() != 1 && mvwinch(Board, it->getY(), it->getX() - 1) != basic_block && mvwinch(Board, it->getY() + 1, it->getX() - 1) != basic_block)
     {
         check = true;
     }
@@ -65,7 +65,7 @@ bool Game::left_check()
 bool Game::right_check()
 {
     bool check;
-    if (it->getX() != 9)
+    if (it->getX() != 9 && mvwinch(Board, it->getY(), it->getX() + 2) != basic_block && mvwinch(Board, it->getY() + 1, it->getX() + 2) != basic_block)
     {
         check = true;
     }
@@ -102,6 +102,34 @@ bool Game::collision()
         check = false;
     }
     return check;
+}
+
+void Game::linedelete(int y)
+{
+    for (int i = 1; i < board_lenght - 1; i++)
+    {
+        mvwaddch(Board, y, i, ' ');
+    }
+    update();
+}
+
+void Game::linecheck()
+{
+    for (int i = 1; i < board_height - 1; i++)
+    {
+        int fill = 0;
+        for (int t = 1; t < board_lenght - 1; t++)
+        {
+            if (mvwinch(Board, i, t) == basic_block)
+            {
+                fill++;
+            }
+        }
+        if (fill == (board_lenght - 2))
+        {
+            linedelete(i);
+        }
+    }
 }
 
 void Game::Comandi()
@@ -153,6 +181,7 @@ void Game::Game_ON()
         }
         else
         {
+            linecheck();
             change = 0;
             changes();
         }

@@ -7,37 +7,44 @@ void gameLoop()
     initscr();
     cbreak();
     noecho();
-
-    // Inizializza tempo di inizio
-    time_t startTime = time(NULL);
-
-    int score = 0; // Supponiamo che ci sia anche un punteggio
-
-    while (true)
+    int x, y;
+    getmaxyx(stdscr, y, x);
+    box(stdscr, 0, 0);
+    for (int i = 1; i < x - 1; i++)
     {
-        // Calcola il tempo trascorso
-        time_t currentTime = time(NULL);
-        int elapsedSeconds = difftime(currentTime, startTime);
-
-        // Calcola minuti e secondi
-        int minutes = elapsedSeconds / 60;
-        int seconds = elapsedSeconds % 60;
-
-        // Mostra il punteggio e il tempo
-        mvprintw(1, 1, "FULL LINES: %d", score);
-        mvprintw(2, 1, "TIME: %02d:%02d", minutes, seconds); // Formato MM:SS
-
-        refresh();
-
-        // Logica di gioco, input, ecc.
-        int ch = getch();
-        if (ch == 'q')
-            break; // Esce dal ciclo di gioco con 'q'
-
-        // Aggiorna il contenuto della finestra (se necessario)
-        napms(500); // Ritarda di 500 ms per vedere l'aggiornamento
+        mvwaddch(stdscr, y - 10, i, '#');
+        mvwaddch(stdscr, y - 4, i, '#');
     }
+    for (int i = 1; i < x - 2; i++)
+    {
+        mvwaddch(stdscr, y - 6, i, '#');
+    }
+    chtype ch = wgetch(stdscr);
 
+    if (ch == 'l')
+    {
+        for (int i = 1; i < y - 1; i++)
+        {
+            int fill = 0;
+            for (int t = 1; t < x - 1; t++)
+            {
+                if (mvwinch(stdscr, i, t) == '#')
+                {
+                    fill++;
+                }
+            }
+            if (fill == (x - 2))
+            {
+                for (int s = 1; s < x - 1; s++)
+                {
+                    mvwaddch(stdscr, i, s, ' ');
+                }
+                refresh();
+            }
+        }
+    }
+    // mvwprintw(stdscr, 2, 2, "%d", x);
+    getch();
     endwin();
 }
 
